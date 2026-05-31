@@ -1,12 +1,18 @@
 package org.example;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GravadorDeDados {
-    private String arquivo = "livros.dat";
 
-    public void gravarLivros(Map<String, Livro> livros) throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(arquivo));
+    private static final String ARQUIVO_CONTATOS = "livros.dat";
+
+    public void gravarLivros(Map<String, Livro> livros)
+            throws IOException {
+
+        ObjectOutputStream out =
+                new ObjectOutputStream(
+                        new FileOutputStream(ARQUIVO_CONTATOS));
 
         out.writeObject(livros);
         out.close();
@@ -19,14 +25,16 @@ public class GravadorDeDados {
         try {
             ObjectInputStream in =
                     new ObjectInputStream(
-                            new FileInputStream(arquivo));
+                            new FileInputStream(ARQUIVO_CONTATOS));
 
             Map<String, Livro> livros =
-                    (Map<String, Livro>) in.readObject();
+                    (HashMap<String, Livro>) in.readObject();
 
             in.close();
             return livros;
 
+        } catch (FileNotFoundException e) {
+            return new HashMap<>();
         } catch (ClassNotFoundException e) {
             throw new IOException(e);
         }
