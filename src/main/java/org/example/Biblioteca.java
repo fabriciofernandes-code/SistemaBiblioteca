@@ -8,6 +8,7 @@ import java.util.Collection;
  */
 
 public interface Biblioteca {
+
     /**
      * Cadastra um novo livro.
      *
